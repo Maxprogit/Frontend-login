@@ -33,6 +33,10 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
+  router: {
+    middleware: ['auth']
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
@@ -43,12 +47,44 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      home: '/',
+      callback: '/'
+    },
+    localStorage: false,
+    resetOnError: true,
+    strategie: {
+      local: {
+        cooikes: false,
+        user:  {
+          property: user
+        },
+        token: {
+          property: 'token',
+          required: true
+        },
+        endponits: {
+          login: {
+            url:'/user/login',
+            methood: 'post'
+          },
+          user: false
+        },
+        rewriteRedirects: true,
+        fullPathRedirect: true
+      }
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.API,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

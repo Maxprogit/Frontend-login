@@ -8,6 +8,7 @@
     .renglon{
         width: 100vw;
         height: 100vh;
+        display: flex;  
         flex-direction: row;
         align-content: center;
         justify-content: center;
