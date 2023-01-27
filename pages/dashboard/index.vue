@@ -6,6 +6,7 @@
 import Dashboard from '~/layouts/dashboard.vue';
 
     export default {
+        auth: true,
         layout: 'dashboard'
     }
 </script>

@@ -23,11 +23,11 @@
                 </v-col>
             </v-row>
             </v-card-text>
-            <v-card-action>
+            <v-card-actions>
                 <v-btn class="btnLogin" rounded block @click="loginBackend">
                     Inciar Sesion
                 </v-btn>
-            </v-card-action>
+            </v-card-actions>
         </v-card>
     </v-card>
 </template>
@@ -48,10 +48,23 @@ export default {
         }
     },
     methods: {
-        loginBackend () {
+        async loginBackend () {
             const valid = this.$refs.formLogin.validate()
-            if(valid){
-                alert('presionaste el boton')
+            if(valid) {
+                const senData = {
+                    email: this.correoElectronico,
+                    password: this.password
+                }
+                await this.$auth.loginWith('local', {
+                    data: senData
+                }).then( async (res) => {
+                    console.log('respuesta del back: ', res)
+                    if (res.data.error == null){
+                        this.$router.push('/dashboard')
+                    }
+                }).catch((error) => {
+                    console.log('error: ', error)
+                })
             } else {
                 alert('No cumpliste las reglas')
             }
